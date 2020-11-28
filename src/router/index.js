@@ -9,7 +9,8 @@ import Dashboard from '@/components/Dashboard'
 // import Sidebar from '@/components/pages/Sidebar'
 import Products from '@/components/pages/Products'
 import CustomerOrder from '@/components/pages/CustomerOrders'
-
+import CustomerCheckout from '@/components/pages/CustomerCheckout'
+import Coupons from '@/components/pages/Coupons'
 //自訂一分頁元件
 Vue.use(VueRouter)
 
@@ -39,6 +40,12 @@ export default new VueRouter({
                     component: Products,
                     meta: { requiresAuth: true },
                 },
+                {
+                    path: 'coupons',
+                    name: 'Coupons',
+                    component: Coupons,
+                    meta: { requiresAuth: true}
+                }
             ]
         },
         {
@@ -50,6 +57,11 @@ export default new VueRouter({
                 path: 'customer_order',
                 name: 'CustomerOrder',
                 component: CustomerOrder,
+              },
+              {
+                path: 'customer_checkout/:orderId',
+                name: 'CustomerCheckout',
+                component: CustomerCheckout,
               },
             ],
           },

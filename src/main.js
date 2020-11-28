@@ -3,11 +3,18 @@
 import Vue from 'vue';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
+import { ValidationObserver, ValidationProvider, extend, localize, configure } from 'vee-validate';
+import TW from 'vee-validate/dist/locale/zh_TW.json';
+import * as rules from 'vee-validate/dist/rules';
+
+
 import 'bootstrap'; 
-import '@fortawesome/fontawesome-free/js/fontawesome'
 import '@fortawesome/fontawesome-free/js/solid'
 import '@fortawesome/fontawesome-free/js/regular'
 import '@fortawesome/fontawesome-free/js/brands'
+import '@fortawesome/fontawesome-free/css/all.min.css'
+import numeral from 'numeral';
+window.numeral = numeral;
 
 import $ from 'jquery';
 window.$ = $;
@@ -18,12 +25,35 @@ import App from './App';
 import router from './router';
 import './bus';
 import currencyFilter from './filters/currency'
+import percentFilter from './filters/percent'
+import dateFilter from './filters/date'
 
+Object.keys(rules).forEach((rule) => {
+  extend(rule, rules[rule]);
+});
+
+localize('zh_TW', TW);
+
+Vue.component('ValidationObserver', ValidationObserver);
+Vue.component('ValidationProvider', ValidationProvider);
+
+configure({
+  classes: {
+    valid: 'is-valid',
+    invalid: 'is-invalid'
+  }
+});
 
 Vue.component('Loading', Loading);
 Vue.use(VueAxios, axios)
 Vue.config.productionTip = false
 Vue.filter('currency', currencyFilter)
+Vue.filter('percent', percentFilter)
+Vue.filter('date', dateFilter)
+
+
+
+
 // axios.defaults.withCredentials = true; //存cookies
 /* eslint-disable no-new */
 new Vue({
